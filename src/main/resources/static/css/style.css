@@ -50,3 +50,12 @@ h1 {
 	width: 200px;
 	font-size: 20px;
 }
+
+#tophit {
+	font-size: 24px;
+}
+
+#songname {
+	font-size: 24px;
+	margin-top: 20px;
+}

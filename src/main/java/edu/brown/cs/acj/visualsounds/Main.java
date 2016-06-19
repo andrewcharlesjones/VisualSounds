@@ -129,8 +129,10 @@ public final class Main {
 //			for (Tag tag : results.get(0).getTags()) {
 //				System.out.println(tag.getName() + ": " + tag.getProbability());
 //			}
+			
+			System.out.println(results.get(0).getTags().get(0).getName());
 
-			return GSON.toJson(results.get(0).getTags().get(0));
+			return GSON.toJson(results.get(0).getTags().get(0).getName());
 		}
 	}
 }
