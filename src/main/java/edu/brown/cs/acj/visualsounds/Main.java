@@ -2,20 +2,31 @@ package edu.brown.cs.acj.visualsounds;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 
 import com.clarifai.api.ClarifaiClient;
 import com.clarifai.api.RecognitionRequest;
 import com.clarifai.api.RecognitionResult;
 import com.clarifai.api.Tag;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.ModelAndView;
+import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
+import spark.Route;
 import spark.Spark;
 import spark.TemplateViewRoute;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -46,7 +57,7 @@ public final class Main {
 	}
 
 	private String[] args;
-	private static String db;
+	private static final Gson GSON = new Gson();
 
 	private Main(String[] args) {
 		this.args = args;
@@ -56,13 +67,6 @@ public final class Main {
 		OptionParser parser = new OptionParser();
 		parser.accepts("gui");
 		OptionSet options = parser.parse(args);
-
-		ClarifaiClient clarifai = new ClarifaiClient("YzMYgXRFeJXUQqUId1U9QsaID3Mg9tp5IuE8CIyy", "gpFtPGj3xh1ym2HDybq3buvPF3z4AtOodDTMVsp3");
-		List<RecognitionResult> results = clarifai.recognize(new RecognitionRequest("http://www.clarifai.com/img/metro-north.jpg"));
-
-		for (Tag tag : results.get(0).getTags()) {
-			System.out.println(tag.getName() + ": " + tag.getProbability());
-		}
 
 		runSparkServer();
 
@@ -78,6 +82,7 @@ public final class Main {
 
 		// Setup Spark Routes
 		Spark.get("/index.html", new FrontHandler(), freeMarker);
+		Spark.post("/imageContents", new ImageRecognizer());
 	}
 
 	/**
@@ -108,6 +113,24 @@ public final class Main {
 
 			Map<String, String> variables = ImmutableMap.of("title", "HelpMe!");
 			return new ModelAndView(variables, "index.html");
+		}
+	}
+	
+	private static class ImageRecognizer implements Route {
+		@Override
+		public Object handle(Request req, Response res) {
+			QueryParamsMap qm = req.queryMap();
+			String imgURL = qm.value("imgurl");
+			System.out.println(imgURL);
+			
+			ClarifaiClient clarifai = new ClarifaiClient("YzMYgXRFeJXUQqUId1U9QsaID3Mg9tp5IuE8CIyy", "gpFtPGj3xh1ym2HDybq3buvPF3z4AtOodDTMVsp3");
+			List<RecognitionResult> results = clarifai.recognize(new RecognitionRequest(imgURL));
+
+//			for (Tag tag : results.get(0).getTags()) {
+//				System.out.println(tag.getName() + ": " + tag.getProbability());
+//			}
+
+			return GSON.toJson(results.get(0).getTags().get(0));
 		}
 	}
 }
