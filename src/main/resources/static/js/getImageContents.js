@@ -28,7 +28,7 @@ $('#push').click(function() {
 				audio.src = track;
 				audio.play();
 
-				$('#songname').text("The track we found for you is " + response.tracks.items[0].name);
+				updateSongName(response.tracks.items[0].name, response.tracks.items[0].artists[0].name)
 
 				$('#amiwrong').text("Don't think that's the centerpiece of the image? Here are some other things we think it might be:")
 				$('#2').text(responseObject[1].name).click(function() {
@@ -47,7 +47,7 @@ $('#push').click(function() {
 				$('#otheroptions').show()
 	        }
 	    });
-	})
+	});
 });
 
 var playSongByKeyword = function(keyword) {
@@ -59,14 +59,16 @@ var playSongByKeyword = function(keyword) {
         },
         success: function (response) {
             var track = response.tracks.items[0].preview_url;
-            audio.pause();
+            updateSongName(response.tracks.items[0].name, response.tracks.items[0].artists[0].name);
 			audio.src = track;
 			audio.play();
 		}
 	});
 };
 
-
+var updateSongName = function(songName, artistName) {
+	$('#songname').html("<p>The track we found for you is <b>" + songName + "</b> by <b>" + artistName + "</b></p>");
+}
 
 
 
