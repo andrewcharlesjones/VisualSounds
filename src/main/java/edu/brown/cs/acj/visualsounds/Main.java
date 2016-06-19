@@ -132,7 +132,8 @@ public final class Main {
 			
 			System.out.println(results.get(0).getTags().get(0).getName());
 
-			return GSON.toJson(results.get(0).getTags().get(0).getName());
+//			return GSON.toJson(results.get(0).getTags().get(0).getName());
+			return GSON.toJson(results.get(0).getTags());
 		}
 	}
 }
