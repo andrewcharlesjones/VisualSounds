@@ -64,9 +64,6 @@ public final class Main {
 	}
 
 	private void run() {
-		OptionParser parser = new OptionParser();
-		parser.accepts("gui");
-		OptionSet options = parser.parse(args);
 
 		runSparkServer();
 
@@ -125,14 +122,8 @@ public final class Main {
 			
 			ClarifaiClient clarifai = new ClarifaiClient("YzMYgXRFeJXUQqUId1U9QsaID3Mg9tp5IuE8CIyy", "gpFtPGj3xh1ym2HDybq3buvPF3z4AtOodDTMVsp3");
 			List<RecognitionResult> results = clarifai.recognize(new RecognitionRequest(imgURL));
-
-//			for (Tag tag : results.get(0).getTags()) {
-//				System.out.println(tag.getName() + ": " + tag.getProbability());
-//			}
 			
 			System.out.println(results.get(0).getTags().get(0).getName());
-
-//			return GSON.toJson(results.get(0).getTags().get(0).getName());
 			return GSON.toJson(results.get(0).getTags());
 		}
 	}

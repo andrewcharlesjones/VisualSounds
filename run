@@ -35,9 +35,5 @@ PROJECT=$(basename $(pwd))
 # The funny symbol: "$@" passes the command-line arguments on from
 # this script to your Java program.
 
-mkdir -p /ltmp/$USER
-cp /course/cs032/data/bacon/bacon.sqlite3 /ltmp/$USER >/dev/null
-chmod +w /ltmp/$USER/bacon.sqlite3
-
-java -cp $TARGET:$CP edu.brown.cs.acj.bacon.Main "$@"
+java -cp $TARGET:$CP edu.brown.cs.acj.visualsounds.Main "$@"
 
