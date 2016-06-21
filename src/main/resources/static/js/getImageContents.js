@@ -1,6 +1,7 @@
 var audio = new Audio();
 
 $('#otheroptions').hide()
+$('#resetbutton').hide()
 
 $('#push').click(function() {
 	console.log('clicked')
@@ -24,6 +25,8 @@ $('#push').click(function() {
 	        	console.log(response);
 	        	console.log(response.tracks.items[0].name)
 	            var track = response.tracks.items[0].preview_url;
+
+	            $('#inputimage').html('<p>Your image:</p><br><img src=' + $('#urltext').val() + ' height="150" width="150">')
 	            
 				audio.src = track;
 				audio.play();
@@ -44,7 +47,8 @@ $('#push').click(function() {
 					playSongByKeyword(responseObject[4].name);
 				});
 
-				$('#otheroptions').show()
+				$('#otheroptions').show();
+				$('#resetbutton').show();
 	        }
 	    });
 	});
@@ -70,6 +74,15 @@ var updateSongName = function(songName, artistName) {
 	$('#songname').html("<p>The track we found for you is <b>" + songName + "</b> by <b>" + artistName + "</b></p>");
 }
 
+$('#reset').click(function() {
+	window.location.reload();
+});
 
+// click enter to submit url form
+$("#urltext").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#push").click();
+    }
+});
 
 
