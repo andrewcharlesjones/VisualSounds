@@ -118,6 +118,7 @@ var findSongAndPlay = function(imageurl) {
 
 				$('#chicken').hide();
 				$('#gandalf').hide();
+				$('#lightbulb').hide();
 
 				$('#otheroptions').show();
 				$('#resetbutton').show();
@@ -132,6 +133,10 @@ $('#chicken').click(function() {
 
 $('#gandalf').click(function() {
 	findSongAndPlay("http://vignette2.wikia.nocookie.net/lotr/images/8/8d/Gandalf-2.jpg/revision/latest?cb=20130209172436")
+});
+
+$('#lightbulb').click(function() {
+	findSongAndPlay("http://pix.iemoji.com/images/emoji/apple/ios-9/256/electric-light-bulb.png")
 });
 
 

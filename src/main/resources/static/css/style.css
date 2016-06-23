@@ -153,15 +153,29 @@ h1 {
 
 #examples img {
 	display: inline-block;
-	margin-left: ;
+	overflow: hidden;
+	/*float:left;*/
+	margin: 0 auto;
 }
 
 #chicken {
 	cursor: pointer;
+	display: inline-block;
+	height:200px;
+	width: 200px;
 }
 
 #gandalf {
 	cursor: pointer;
+	display: inline-block;
+	height:200px;
+	width: 200px;
+}
+
+#lightbulb {
+	cursor: pointer;
+	height:200px;
+	width: 200px;
 }
 
 
